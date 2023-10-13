@@ -1,0 +1,63 @@
+.section-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.section-notes {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  justify-content: space-around;
+}
+
+/* Estilos para el botón */
+.create-note-button {
+  padding: 12px 20px; /* Espaciado interno */
+  font-size: 16px; /* Tamaño de fuente */
+  background-color: #ffee99; /* Color de fondo (amarillo claro) */
+  border: none; /* Sin borde */
+  border-radius: 8px; /* Borde redondeado */
+  color: #333; /* Color del texto */
+  cursor: pointer; /* Cambia el cursor al pasar el mouse sobre el botón */
+  transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+}
+
+/* Estilos para el botón cuando se pasa el mouse sobre él */
+.create-note-button:hover {
+  background-color: #fff9c6; /* Cambia el color de fondo al pasar el mouse */
+}
+
+.category-filter {
+  display: flex;
+  position: relative;
+  justify-content: left;
+}
+
+.category-filter h4 {
+  font-size: 1rem;
+  margin-bottom: 1vh;
+}
+
+.category-filter select {
+  margin-left: 2vh;
+  margin-top: 2vh;
+}
+
+select {
+  font-size: 1rem;
+  padding: 1vh;
+  border: 0.3vh solid #ccc;
+  border-radius: 5px;
+  width: 200px; /* Ajusta el ancho según tu preferencia */
+  margin-bottom: 20px;
+  background-color: #fff; /* Color de fondo */
+  color: #333; /* Color del texto */
+}
+select:focus {
+  outline: none; /* Remover el borde alrededor del menú */
+  box-shadow: 0 0 15px #fff9c6; /* Agregar una sombra alrededor cuando está enfocado */
+}

@@ -1,0 +1,126 @@
+.modal-overlay-note {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.modal-content-note {
+  width: 400px;
+  height: auto;
+  background-color: #fef8d7;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content-note h2 {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 16px;
+}
+textarea {
+  height: 100px; /* Altura inicial */
+  resize: vertical; /* Permite que el usuario ajuste verticalmente la altura */
+}
+
+.container-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.container-label input {
+  width: 60%;
+  border: 1px solid #767676;
+  border-radius: 2px;
+}
+
+.container-label textarea {
+  min-height: 16px;
+  height: 100px;
+  width: 60%;
+  resize: none;
+  overflow-y: scroll;
+  border: 1px solid #767676;
+  border-radius: 2px;
+}
+
+.container-label-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+}
+.container-label--categories {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.container-label--categories input {
+  width: 40%;
+  margin-right: 1vh;
+  border-radius: 2px;
+  border: 1px solid #767676;
+}
+
+.square {
+  height: 100px;
+  width: 60%;
+  border-radius: 2px;
+  overflow-y: scroll;
+  overflow-x: auto;
+  background-color: white;
+  border: 1px solid #767676;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.square-ul {
+  list-style-type: none;
+  padding: 0 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.square-ul-li {
+  padding-left: 2vh;
+}
+
+.button-add {
+  color: #f9df39;
+  background-color: #767676;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-add:hover {
+  background-color: black;
+}
+
+.button-remove {
+  margin-left: 2px;
+  color: #f9df39;
+  background-color: #767676;
+  border-radius: 4px;
+  border: none;
+  font-size: 0.7rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bolder;
+  font-style: oblique;
+  cursor: pointer;
+}
