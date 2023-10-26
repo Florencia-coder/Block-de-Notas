@@ -13,44 +13,60 @@
 .modal-content-note {
   width: 400px;
   height: auto;
-  background-color: #fef8d7;
-  border-radius: 8px;
+  background-color: var(--background-color);
+  border-radius: 12px;
   padding: 16px;
   display: flex;
   flex-direction: column;
+  outline: none;
+}
+/* Estilo para desactivar el resaltado al hacer clic */
+input:focus,
+textarea:focus {
+  outline: none; /* Elimina el borde de resaltado */
+}
+
+/* Estilo para desactivar el resaltado durante el clic */
+input:active,
+textarea:active {
+  outline: none;
 }
 
 .modal-content-note h2 {
   margin: 0;
   padding: 0;
   margin-bottom: 16px;
-}
-textarea {
-  height: 100px; /* Altura inicial */
-  resize: vertical; /* Permite que el usuario ajuste verticalmente la altura */
+  font-family: var(--font-title-family);
+  color: var(--font-title-color);
 }
 
-.container-label {
+.input-container {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+}
+
+.input-container input,
+.input-container textarea {
+  padding: 10px;
+  border: 0.1px solid #272725;
+  background-color: var(--background-color);
+  color: var(--font-title-color);
+  font-family: var(--font-text-family);
+}
+
+.input-container textarea {
+  resize: vertical; /* Permite redimensionar verticalmente la descripción */
+  border-radius: 0px 0px 8px 8px;
   margin-bottom: 16px;
+  border-top: 0px !important;
+  box-shadow: 3px 3px 1px #272725;
 }
 
-.container-label input {
-  width: 60%;
-  border: 1px solid #767676;
-  border-radius: 2px;
-}
-
-.container-label textarea {
-  min-height: 16px;
-  height: 100px;
-  width: 60%;
-  resize: none;
-  overflow-y: scroll;
-  border: 1px solid #767676;
-  border-radius: 2px;
+.input-container input {
+  border-radius: 8px 8px 0px 0px;
+  margin-top: 16px;
+  border-bottom: 0px !important;
+  box-shadow: 3px 3px 1px #272725;
 }
 
 .container-label-button {
@@ -60,67 +76,47 @@ textarea {
   align-items: flex-end;
   margin-top: auto;
 }
-.container-label--categories {
+
+.icon {
+  margin-left: 4px;
+  color: #51544a;
+  width: 14px;
+  height: 14px;
+}
+
+.square-ul-container div {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   margin-bottom: 16px;
 }
 
-.container-label--categories input {
-  width: 40%;
-  margin-right: 1vh;
-  border-radius: 2px;
-  border: 1px solid #767676;
+.square-ul-container input {
+  border: 0.3vh solid var(--background-color);
+  border-radius: 8px;
+  height: fit-content;
+  padding: 6px;
+  background-color: var(--background-clear); /* Color de fondo */
+  color: #888d83; /* Color del texto */
+  outline: none;
 }
 
-.square {
-  height: 100px;
-  width: 60%;
-  border-radius: 2px;
-  overflow-y: scroll;
-  overflow-x: auto;
-  background-color: white;
-  border: 1px solid #767676;
+.square-ul-container input:focus {
+  color: var(--font-title-color);
+  background-color: var(--background-clear);
+}
+
+.square-ul-container {
   display: flex;
   flex-wrap: wrap;
+  flex: 1;
+  gap: 5px;
 }
 
-.square-ul {
-  list-style-type: none;
-  padding: 0 5px;
+.selectedCategory {
+  font-family: var(--font-text-family);
+  color: var(--font-title-color);
+  margin-right: 10px;
   display: flex;
-  flex-wrap: wrap;
-}
-
-.square-ul-li {
-  padding-left: 2vh;
-}
-
-.button-add {
-  color: #f9df39;
-  background-color: #767676;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.button-add:hover {
-  background-color: black;
-}
-
-.button-remove {
-  margin-left: 2px;
-  color: #f9df39;
-  background-color: #767676;
-  border-radius: 4px;
-  border: none;
-  font-size: 0.7rem;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-weight: bolder;
-  font-style: oblique;
-  cursor: pointer;
+  align-items: center;
 }

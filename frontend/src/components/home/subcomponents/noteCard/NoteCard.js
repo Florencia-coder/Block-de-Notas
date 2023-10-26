@@ -1,20 +1,25 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faNoteSticky,
-  faPenToSquare,
-  faTrashCan,
-} from "@fortawesome/free-regular-svg-icons";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faBoxArchive, faUpload } from "@fortawesome/free-solid-svg-icons";
 import "./noteCard.css";
 import ModalDeleteCard from "../modalDeleteCard/ModalDeleteCard";
 import ModalCreateEditNote from "../../../modalCreateEditNote/ModalCreateEditNote";
-import { usePutNote } from "../../../../actions";
+import { usePatchNote } from "../../../../actions";
+import formatDate from "../../utils";
 
-const NoteCard = ({ title, description, type, updatedAt, id, archived }) => {
+const NoteCard = ({
+  title,
+  description,
+  categoryId,
+  type,
+  updatedAt,
+  id,
+  archived,
+}) => {
   const [modalIsOpenDelete, setModalIsOpenDelete] = useState(false);
   const [modalIsOpenEdit, setModalIsOpenEdit] = useState(false);
-  const { putNote } = usePutNote();
+  const { patchNote } = usePatchNote();
 
   const handleEditNote = () => {
     setModalIsOpenEdit(true);
@@ -33,29 +38,19 @@ const NoteCard = ({ title, description, type, updatedAt, id, archived }) => {
   };
 
   const handleArchiveNote = () => {
-    putNote({ id, archived: true });
+    patchNote({ id, archived: true });
   };
 
   const handleUnarchiveNote = () => {
-    putNote({ id, archived: false });
-  };
-
-  const formatDate = (dateString) => {
-    const dateObj = new Date(dateString);
-    const options = {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    };
-    return dateObj.toLocaleDateString("es-ES", options);
+    patchNote({ id, archived: false });
   };
 
   return (
-    <div className="container-card">
-      <FontAwesomeIcon icon={faNoteSticky} className="icon" />
+    <div>
       <div className="container-card-second">
-        <h2>{title}</h2>
+        <h2>{title.toUpperCase()}</h2>
         <p>Last edited: {formatDate(updatedAt)}</p>
+        <h4>{description}</h4>
       </div>
       <div className="container-card-third">
         <FontAwesomeIcon
@@ -77,6 +72,7 @@ const NoteCard = ({ title, description, type, updatedAt, id, archived }) => {
         type="edit"
         onClose={closeModalEdit}
         description={description ? description : null}
+        categoryId={categoryId ? categoryId : null}
         title={title ? title : null}
         archived={archived}
         id={id}

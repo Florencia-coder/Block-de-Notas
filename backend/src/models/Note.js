@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db.js";
-import { Category } from "./Category.js";
+import { Category } from "./index.js";
 
 export const Note = sequelize.define("Note", {
   id: {
@@ -12,13 +12,17 @@ export const Note = sequelize.define("Note", {
     type: DataTypes.STRING,
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
   },
   archived: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  categoryId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
 });
 
-Note.belongsToMany(Category, { through: "NoteCategory" });
-Category.belongsToMany(Note, { through: "NoteCategory" });
+Note.belongsTo(Category, { foreignKey: "categoryId", allowNull: true });
+Category.hasMany(Note, { foreignKey: "categoryId" });

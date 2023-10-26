@@ -1,10 +1,22 @@
 import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
 
-// const sequelize = new Sequelize("my_db", "express", "express", {
-//   host: "localhost",
-//   dialect: "postgres", // Usa 'postgres' como dialecto para PostgreSQL
-// });
+// Carga las variables de entorno desde el archivo .env
+dotenv.config();
+
 const sequelize = new Sequelize(
-  `postgres://express:express@localhost:5432/my_db`
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: "postgres", // Usa 'postgres' como dialecto para PostgreSQL
+  }
 );
+
+// const sequelize = new Sequelize(
+//   "postgres://postgres:1234@localhost:5432/my_db"
+// );
+
 export { sequelize };

@@ -1,0 +1,36 @@
+.section-options {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.icon-select {
+  width: 14px;
+  height: 14px;
+  color: var(--font-text-color);
+  margin-right: 6px;
+}
+
+.section-options div {
+  cursor: pointer;
+  color: var(--font-title-color);
+  font-family: var(--font-text-family);
+  font-size: medium;
+  padding: 12px;
+  transition: all 0.3s;
+}
+
+.section-options div:hover {
+  background-color: var(--background-clear);
+  border-radius: 0px 14px 14px 0px;
+}
+
+.focused {
+  background-color: #7f5539;
+  border-radius: 0px 14px 14px 0px;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--font-title-color);
+}

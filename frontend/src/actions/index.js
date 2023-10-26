@@ -1,9 +1,10 @@
+import { PORT } from "./constants";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 
 export function useGetNotes() {
   return useQuery("notes", async () => {
-    const response = await axios.get("http://localhost:5000/notes");
+    const response = await axios.get(`${PORT}/notes`);
     return response.data;
   });
 }
@@ -12,18 +13,18 @@ export function usePostNote() {
   const queryClient = useQueryClient();
 
   const postNoteMutation = useMutation(
-    async ({ title, description, categories }) => {
-      const response = await axios.post("http://localhost:5000/notes", {
+    async ({ title, description, category }) => {
+      const response = await axios.post(`${PORT}/notes`, {
         title,
         description,
-        categories,
+        category,
       });
       return response.data;
     }
   );
 
-  const postNote = async ({ title, description, categories }) => {
-    await postNoteMutation.mutateAsync({ title, description, categories });
+  const postNote = async ({ title, description, category }) => {
+    await postNoteMutation.mutateAsync({ title, description, category });
 
     queryClient.invalidateQueries("notes");
     queryClient.invalidateQueries("categories");
@@ -40,18 +41,25 @@ export function usePutNote() {
   const queryClient = useQueryClient();
 
   const putNoteMutation = useMutation(
-    async ({ id, title, description, archived }) => {
-      const response = await axios.put(`http://localhost:5000/notes/${id}/`, {
+    async ({ id, title, description, archived, category }) => {
+      const response = await axios.put(`${PORT}/notes/${id}/`, {
         title,
         description,
         archived,
+        category,
       });
       return response.data;
     }
   );
 
-  const putNote = async ({ id, title, description, archived }) => {
-    await putNoteMutation.mutateAsync({ id, title, description, archived });
+  const putNote = async ({ id, title, description, archived, category }) => {
+    await putNoteMutation.mutateAsync({
+      id,
+      title,
+      description,
+      archived,
+      category,
+    });
 
     queryClient.invalidateQueries("notes");
   };
@@ -64,13 +72,36 @@ export function usePutNote() {
   };
 }
 
+export function usePatchNote() {
+  const queryClient = useQueryClient();
+  const patchNoteMutation = useMutation(async ({ id, archived }) => {
+    const response = await axios.patch(`${PORT}/notes/${id}/`, {
+      archived,
+    });
+    return response.data;
+  });
+
+  const patchNote = async ({ id, archived }) => {
+    await patchNoteMutation.mutateAsync({
+      id,
+      archived,
+    });
+    queryClient.invalidateQueries("notes");
+  };
+
+  return {
+    patchNote,
+    isLoading: patchNoteMutation.isLoading,
+    isError: patchNoteMutation.isError,
+    refresh: patchNoteMutation.reset,
+  };
+}
+
 export function useDeleteNote() {
   const queryClient = useQueryClient();
 
   const deleteNoteMutation = useMutation(async (noteId) => {
-    const response = await axios.delete(
-      `http://localhost:5000/notes/${noteId}`
-    );
+    const response = await axios.delete(`${PORT}/notes/${noteId}`);
     return response.data;
   });
 
@@ -88,16 +119,31 @@ export function useDeleteNote() {
 
 export function useGetCategories() {
   return useQuery("categories", async () => {
-    const response = await axios.get("http://localhost:5000/categories");
+    const response = await axios.get(`${PORT}/categories`);
     return response.data;
   });
 }
 
+export function useGetCategoryById() {
+  const categoryByIdMutation = useMutation(async (id) => {
+    const response = await axios.get(`${PORT}/categories/${id}`);
+    return response.data;
+  });
+
+  const getCategoryById = async (id) => {
+    return await categoryByIdMutation.mutateAsync(id);
+  };
+
+  return {
+    getCategoryById,
+    isLoading: categoryByIdMutation.isLoading,
+    isError: categoryByIdMutation.isError,
+  };
+}
+
 export function useGetNotesCategory() {
   const noteCategoryMutation = useMutation(async (id) => {
-    const response = await axios.get(
-      `http://localhost:5000/categories/${id}/notes/`
-    );
+    const response = await axios.get(`${PORT}/categories/${id}/notes/`);
     return response.data;
   });
 
@@ -109,24 +155,5 @@ export function useGetNotesCategory() {
     noteCategory,
     isLoading: noteCategoryMutation.isLoading,
     isError: noteCategoryMutation.isError,
-  };
-}
-
-export function usePostCategory() {
-  const postCategoryMutation = useMutation(async ({ name }) => {
-    const response = await axios.post("http://localhost:5000/categories", {
-      name,
-    });
-    return response.data;
-  });
-
-  const postCategory = async ({ name }) => {
-    await postCategoryMutation.mutateAsync({ name });
-  };
-
-  return {
-    postCategory,
-    isLoading: postCategoryMutation.isLoading,
-    isError: postCategoryMutation.isError,
   };
 }

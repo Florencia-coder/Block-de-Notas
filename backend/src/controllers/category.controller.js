@@ -1,5 +1,4 @@
-import { Category } from "../models/Category.js";
-import { Note } from "../models/Note.js";
+import { Category, Note } from "../models/index.js";
 
 export const getCategories = async (req, res) => {
   try {
@@ -10,11 +9,17 @@ export const getCategories = async (req, res) => {
   }
 };
 
-export const createCategory = async (req, res) => {
-  const { name } = req.body;
+export const getCategoryById = async (req, res) => {
+  const categoryId = req.params.id; // Obtener el ID de los parámetros de la solicitud
+
   try {
-    const newCategory = await Category.create({ name });
-    res.json(newCategory);
+    const category = await Category.findByPk(categoryId); // Buscar la categoría por su ID
+
+    if (!category) {
+      return res.status(404).json({ message: "Categoría no encontrada" });
+    }
+
+    res.json(category); // Devolver la categoría encontrada
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -23,19 +28,11 @@ export const createCategory = async (req, res) => {
 export const getNotesCategory = async (req, res) => {
   const { id } = req.params;
   try {
-    const category = await Category.findByPk(id, {
-      include: {
-        model: Note,
-        through: {
-          attributes: [], // Excluye todas las columnas de la tabla inmtermedia
-        },
-      },
-    });
-
+    const category = await Category.findByPk(id);
     if (!category) {
-      return res.status(404).json({ message: "Category does not exists." });
+      return res.status(404).json({ message: "Category does not exist." });
     }
-    const notes = category.Notes;
+    const notes = await category.getNotes(); // Cargar las notas asociadas
     res.json(notes);
   } catch (error) {
     return res.status(500).json({ message: error.message });

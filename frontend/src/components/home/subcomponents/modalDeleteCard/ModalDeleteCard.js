@@ -17,16 +17,15 @@ const ModalDeleteCard = ({ modalIsOpen, onClose, id }) => {
       overlayClassName="modal-overlay"
       ariaHideApp={false}
     >
-      <h2>¿Are you sure you want to delete this note?</h2>
-      <p>
-        If you delete the following note, you won't be able to retrieve it later
-      </p>
+      <h2>¿Estás seguro que quieres eliminar esta nota?</h2>
+      <div className="separatorHeader" />
+      <p>Si eliminas la siguiente nota, no podrás recuperarla más tarde.</p>
       <div className="container-button">
         <button onClick={onClose} className="button">
-          Cancel
+          Cancelar
         </button>
         <button onClick={handleDeleteNote} className="button">
-          {isLoading ? "Loading..." : "Accept"}
+          {isLoading ? "Cargando..." : "Aceptar"}
         </button>
       </div>
     </Modal>

@@ -1,63 +1,115 @@
-.section-header {
+/* Clases de colores de fondo */
+.color-1 {
+  background-color: #ffadad;
+}
+.color-2 {
+  background-color: #ffd6a5;
+}
+.color-3 {
+  background-color: #fdffb6;
+}
+.color-4 {
+  background-color: #caffbf;
+}
+.color-5 {
+  background-color: #9bf6ff;
+}
+.color-6 {
+  background-color: #a0c4ff;
+}
+.color-7 {
+  background-color: #bdb2ff;
+}
+.color-8 {
+  background-color: #ffc6ff;
+}
+.color-9 {
+  background-color: #fffffc;
+}
+/* Agrega más clases según sea necesario */
+
+.container-card {
+  box-sizing: border-box;
+  border-radius: 8px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+  width: 100%;
+  height: fit-content;
 }
 
+.container-main {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.section-header {
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--font-title-color);
+}
+.section-header div {
+  display: flex;
+  align-items: center;
+}
+.section-header img {
+  height: 40px;
+  width: 40px;
+}
+.section-header h1 {
+  font-family: var(--font-title-family);
+  color: var(--font-title-color);
+  margin-left: 10px;
+}
 .section-notes {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
   padding: 20px;
   box-sizing: border-box;
   justify-content: space-around;
 }
 
-/* Estilos para el botón */
-.create-note-button {
-  padding: 12px 20px; /* Espaciado interno */
-  font-size: 16px; /* Tamaño de fuente */
-  background-color: #ffee99; /* Color de fondo (amarillo claro) */
-  border: none; /* Sin borde */
-  border-radius: 8px; /* Borde redondeado */
-  color: #333; /* Color del texto */
-  cursor: pointer; /* Cambia el cursor al pasar el mouse sobre el botón */
-  transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
-}
-
-/* Estilos para el botón cuando se pasa el mouse sobre él */
-.create-note-button:hover {
-  background-color: #fff9c6; /* Cambia el color de fondo al pasar el mouse */
+.section-body {
+  padding-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap: 10px;
 }
 
 .category-filter {
   display: flex;
-  position: relative;
-  justify-content: left;
+  align-items: center;
+  width: 50%;
 }
 
 .category-filter h4 {
-  font-size: 1rem;
-  margin-bottom: 1vh;
+  font-family: var(--font-title-family);
+  color: var(--font-title-color);
 }
 
 .category-filter select {
   margin-left: 2vh;
   margin-top: 2vh;
+  height: 100%;
 }
 
 select {
   font-size: 1rem;
-  padding: 1vh;
-  border: 0.3vh solid #ccc;
-  border-radius: 5px;
-  width: 200px; /* Ajusta el ancho según tu preferencia */
+  padding: 1.5vh;
+  border: 0.3vh solid var(--background-color);
+  border-radius: 8px;
+  width: 100%; /* Ajusta el ancho según tu preferencia */
   margin-bottom: 20px;
-  background-color: #fff; /* Color de fondo */
-  color: #333; /* Color del texto */
+  background-color: var(--background-clear); /* Color de fondo */
+  color: #888d83; /* Color del texto */
+  outline: none;
 }
 select:focus {
-  outline: none; /* Remover el borde alrededor del menú */
-  box-shadow: 0 0 15px #fff9c6; /* Agregar una sombra alrededor cuando está enfocado */
+  color: var(--font-title-color);
+  background-color: var(--background-clear);
 }

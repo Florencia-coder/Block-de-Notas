@@ -9,8 +9,8 @@ async function main() {
     console.log("Connection has been established successfully.");
     await sequelize.sync({ force: false });
     console.log("Synchronize tables with database successfully");
-    app.listen(5000, () => {
-      console.log("Escuchando en el puerto 5000"); // eslint-disable-line no-console
+    app.listen(2000, () => {
+      console.log("Escuchando en el puerto 2000"); // eslint-disable-line no-console
     });
   } catch (error) {
     console.error("Unable to connect to the database:", error);
