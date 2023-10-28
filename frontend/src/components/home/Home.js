@@ -1,43 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import "./home.css";
-import NoteCard from "./subcomponents/noteCard/NoteCard";
+import SectionHeader from "./sectionHeader/SectionHeader";
 import SectionOptions from "./subcomponents/sectionOptions/SectionOptions";
-import FilterCategories from "./subcomponents/filterCategories/FilterCategories";
-import {
-  useGetNotes,
-  useGetCategories,
-  useGetNotesCategory,
-} from "../../actions";
-
-const colores = [
-  "color-1",
-  "color-2",
-  "color-3",
-  "color-4",
-  "color-5",
-  "color-6",
-  "color-7",
-  "color-8",
-  "color-9",
-];
-let colorIndex = 0;
-
-// Función para asignar una clase de color de fondo a una tarjeta
-function asignarColorDeFondo(contenedor) {
-  const color = colores[colorIndex];
-  contenedor.classList.add(color);
-  colorIndex = (colorIndex + 1) % colores.length; // Vuelve a empezar si te quedas sin colores
-}
+import { useGetNotes, useGetNotesCategory } from "../../actions";
+import SectionNotes from "./sectionNotes/SectionNotes";
 
 const Home = () => {
   const [allNotes, setAllNotes] = useState();
   const [isArchivedBody, setIsArchivedBody] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const { data: notes, isLoading } = useGetNotes();
-  const { data: categories, isLoading: isLoadingCategories } =
-    useGetCategories();
-
   const { noteCategory } = useGetNotesCategory();
 
   const handleCategoryChange = async (event) => {
@@ -85,54 +58,23 @@ const Home = () => {
 
   return (
     <div className="container-main">
-      <section className="section-header">
-        <div>
-          <img src="/assets/images/note-logo.png" alt="logo note" />
-          <h1 className="title">MIS NOTAS</h1>
-        </div>
-        <div className="category-filter">
-          <h4>Filtrar Categoria</h4>
-          {isLoadingCategories ? (
-            <p>Cargando...</p>
-          ) : (
-            <FilterCategories
-              categories={(categories.length > 0 && categories) || []}
-              handleCategory={handleCategoryChange}
-              selectedCategory={selectedCategory}
-            />
-          )}
-        </div>
-        <button style={{ width: "60px" }} title="procesando..." />
-      </section>
-
+      <SectionHeader
+        handleCategoryChange={handleCategoryChange}
+        selectedCategory={selectedCategory}
+      />
       <section className="section-body">
         <SectionOptions
           handleArchivedChange={handleArchivedChange}
           handleMyNotesChange={handleMyNotes}
         />
-        <div className="section-notes">
-          {isLoading ? (
-            <div>Cargando...</div>
-          ) : (
-            allNotes?.map((el, index) => (
-              <div
-                className={`container-card ${colores[index % colores.length]}`}
-              >
-                <NoteCard
-                  key={el.id}
-                  {...el}
-                  type={isArchivedBody ? "archived-note" : ""}
-                />
-              </div>
-            ))
-          )}
-        </div>
+        <SectionNotes
+          allNotes={allNotes}
+          isArchivedBody={isArchivedBody}
+          isLoading={isLoading}
+        />
       </section>
     </div>
   );
 };
-document.querySelectorAll(".container-card").forEach((contenedor) => {
-  asignarColorDeFondo(contenedor);
-});
 
 export default Home;

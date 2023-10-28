@@ -76,8 +76,12 @@ textarea:active {
   align-items: flex-end;
   margin-top: auto;
 }
+.icon-spiner {
+  padding: 10px;
+  color: #51544a;
+}
 
-.icon {
+.icon-trash {
   margin-left: 4px;
   color: #51544a;
   width: 14px;

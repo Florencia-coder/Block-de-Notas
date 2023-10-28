@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import "./filterCategories.css";
 
 const FilterCategories = ({
@@ -7,7 +9,15 @@ const FilterCategories = ({
   defaultValue,
   selectedCategory,
   disabled,
+  isLoadingCategories,
 }) => {
+  if (isLoadingCategories) {
+    return (
+      <div className="loading-spinner">
+        <FontAwesomeIcon className="icon-filter" icon={faSpinner} spin />
+      </div>
+    );
+  }
   return (
     <select
       key="SelectedCategories"

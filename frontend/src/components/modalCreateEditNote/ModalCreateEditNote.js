@@ -1,7 +1,7 @@
 import Modal from "react-modal";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import "./modalCreateEditNote.css";
 import {
   usePostNote,
@@ -28,7 +28,7 @@ const ModalCreateEditNote = ({
   const { postNote, isLoading } = usePostNote();
   const { putNote, isLoading: isLoadingPut } = usePutNote();
   const { getCategoryById } = useGetCategoryById();
-  const { data } = useGetCategories();
+  const { data, isLoading: isLoadingCategories } = useGetCategories();
 
   /**
    *  Agrega la categoria al estado local, y setea el input de "Nueva categoria"
@@ -60,9 +60,9 @@ const ModalCreateEditNote = ({
    * Se ejecuta cuando se le da a "Guardar", si es de tipo "edit", hace un PUT con la info que tiene,
    * de lo contrario hace un POST, creando la nueva nota con toda la información.
    */
-  const handleModalClose = () => {
+  const handleModalClose = async () => {
     if (type === "edit") {
-      putNote({
+      await putNote({
         id,
         title: titleInput,
         description: descriptionInput,
@@ -70,7 +70,7 @@ const ModalCreateEditNote = ({
         category: selectedCategory,
       });
     } else {
-      postNote({
+      await postNote({
         title: titleInput,
         description: descriptionInput,
         category: selectedCategory,
@@ -155,6 +155,7 @@ const ModalCreateEditNote = ({
         />
       </div>
       <FilterCategories
+        isLoadingCategories={isLoadingCategories}
         categories={data}
         handleCategory={handleCategoryExisting}
         defaultValue="Elegir categoria existente"
@@ -184,7 +185,7 @@ const ModalCreateEditNote = ({
           <div className="selectedCategory">
             {selectedCategory}
             <FontAwesomeIcon
-              className="icon"
+              className="icon-trash"
               icon={faCircleXmark}
               onClick={() => removeCategory()}
             />
@@ -196,9 +197,13 @@ const ModalCreateEditNote = ({
         <button onClick={closeModal} className="button">
           Cancelar
         </button>
-        <button onClick={handleModalClose} type="submit" className="button">
-          {isLoading || isLoadingPut ? "Cargando..." : "Guardar"}
-        </button>
+        {isLoading || isLoadingPut ? (
+          <FontAwesomeIcon className="icon-spiner" icon={faSpinner} spin />
+        ) : (
+          <button onClick={handleModalClose} type="submit" className="button">
+            Guardar
+          </button>
+        )}
       </div>
     </Modal>
   );

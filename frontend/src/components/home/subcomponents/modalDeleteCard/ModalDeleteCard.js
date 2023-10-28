@@ -5,8 +5,8 @@ import "./modalDeleteCard.css";
 const ModalDeleteCard = ({ modalIsOpen, onClose, id }) => {
   const { deleteNote, isLoading } = useDeleteNote();
 
-  const handleDeleteNote = () => {
-    deleteNote(id);
+  const handleDeleteNote = async () => {
+    await deleteNote(id);
     onClose();
   };
   return (

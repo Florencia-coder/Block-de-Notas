@@ -37,12 +37,12 @@ const NoteCard = ({
     setModalIsOpenEdit(false);
   };
 
-  const handleArchiveNote = () => {
-    patchNote({ id, archived: true });
+  const handleArchiveNote = async () => {
+    await patchNote({ id, archived: true });
   };
 
-  const handleUnarchiveNote = () => {
-    patchNote({ id, archived: false });
+  const handleUnarchiveNote = async () => {
+    await patchNote({ id, archived: false });
   };
 
   return (
