@@ -29,7 +29,20 @@ const sequelize = new Sequelize(
   {
     dialectModule: pg,
     logging: false,
+    pool: {
+      max: 5, // Configura un máximo de una conexión
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
+    },
   }
 );
+
+// Cerrar la conexión a la base de datos cuando ya no sea necesaria
+process.on("exit", () => {
+  sequelize.close().then(() => {
+    console.log("Conexión a la base de datos cerrada.");
+  });
+});
 
 export default sequelize;
