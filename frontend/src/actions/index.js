@@ -1,6 +1,7 @@
-import { PORT } from "./constants";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
+
+const PORT = "https://block-de-notas-api.vercel.app";
 
 export function useGetNotes() {
   return useQuery("notes", async () => {
