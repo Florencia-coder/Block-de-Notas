@@ -1,4 +1,4 @@
-import { Category, Note } from "../models/index.js";
+import { Category } from "../models/index.js";
 
 export const getCategories = async (req, res) => {
   try {

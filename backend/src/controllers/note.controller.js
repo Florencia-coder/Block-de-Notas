@@ -1,4 +1,4 @@
-import { Note, Category } from "../models/index.js";
+import { Note, Category, User } from "../models/index.js";
 
 export const getNotes = async (req, res) => {
   try {
@@ -12,29 +12,28 @@ export const getNotes = async (req, res) => {
 export const createNote = async (req, res) => {
   const { title, description, category } = req.body;
 
-  try {
-    let categoryInstance = null;
+  const { userId } = req;
+  const user = User.findByPk(userId);
 
-    if (category && category.trim() !== "") {
-      categoryInstance = await Category.findOne({
-        where: { name: category },
-      });
-
-      if (!categoryInstance) {
-        categoryInstance = await Category.create({ name: category });
-      }
-    }
-
-    const newNote = await Note.create({
-      title,
-      description,
-      categoryId: categoryInstance ? categoryInstance.id : null,
-    });
-
-    return res.status(201).json(newNote);
-  } catch (error) {
-    return res.status(500).json({ error: "No se pudo crear la nota", error });
+  if (!user) {
+    return res.status(404).json({ error: "Usuario no encontrado" });
   }
+  // Verifica y crea la categoría si es proporcionada
+  let categoryInstance = null;
+  if (category && category.trim() !== "") {
+    categoryInstance = await Category.findOrCreate({
+      where: { name: category },
+    });
+  }
+
+  // Crea una nueva nota relacionada con el usuario
+  const newNote = await Note.create({
+    title,
+    description,
+    categoryId: categoryInstance ? categoryInstance[0].id : null,
+  });
+
+  return res.status(201).json(newNote);
 };
 
 export const deleteNote = async (req, res) => {

@@ -5,7 +5,8 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import noteRoutes from "./routes/note.routes.js";
 import categoryRoutes from "./routes/category.routes.js";
-
+import accountRoutes from "./routes/login.routes.js";
+import userRoutes from "./routes/user.routes.js";
 const app = express();
 
 //Middlewares
@@ -18,5 +19,7 @@ app.use(setHeaders);
 
 app.use(noteRoutes);
 app.use(categoryRoutes);
+app.use(accountRoutes);
+app.use(userRoutes);
 
 export default app;

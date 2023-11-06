@@ -8,11 +8,12 @@ import {
   getCategoriesNote,
   getNote,
 } from "../controllers/note.controller.js";
+import userExtractor from "../middleware/UserExtractor.js";
 
 const router = Router();
 
 router.get("/notes", getNotes);
-router.post("/notes", createNote);
+router.post("/notes", userExtractor, createNote);
 router.put("/notes/:id", updateNote);
 router.patch("/notes/:id", updateArchivedNote);
 router.delete("/notes/:id", deleteNote);
