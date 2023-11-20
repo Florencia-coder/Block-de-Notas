@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 
-const PORT = "https://block-de-notas-api.vercel.app";
+const PORT = "http://localhost:2000";
 
 export function useGetNotes() {
   return useQuery("notes", async () => {
@@ -12,14 +12,24 @@ export function useGetNotes() {
 
 export function usePostNote() {
   const queryClient = useQueryClient();
-
+  const logedUser = JSON.parse(window.localStorage.getItem("loginUser"));
+  const config = {
+    headers: {
+      Authorization: `Bearer ${logedUser.token}`,
+    },
+  };
+  console.log(logedUser.token);
   const postNoteMutation = useMutation(
     async ({ title, description, category }) => {
-      const response = await axios.post(`${PORT}/notes`, {
-        title,
-        description,
-        category,
-      });
+      const response = await axios.post(
+        `${PORT}/notes`,
+        {
+          title,
+          description,
+          category,
+        },
+        config
+      );
       return response.data;
     }
   );
@@ -38,9 +48,19 @@ export function usePostNote() {
   };
 }
 
+export const postLogin = async (credentials) => {
+  const { data } = await axios.post(`${PORT}/login`, credentials);
+  return data;
+};
+
+export const usePostUser = () => {
+  return useMutation((body) => {
+    return axios.post(`${PORT}/users`, body);
+  });
+};
+
 export function usePutNote() {
   const queryClient = useQueryClient();
-
   const putNoteMutation = useMutation(
     async ({ id, title, description, archived, category }) => {
       const response = await axios.put(`${PORT}/notes/${id}/`, {

@@ -1,14 +1,14 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/home/Home";
-import ArchivedPage from "./components/archivedPage/ArchivedPage";
+import LoginPage from "./components/loginPage/LoginPage";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/archived" element={<ArchivedPage />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route exact path="/home" element={<Home />} />
       </Routes>
     </div>
   );

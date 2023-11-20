@@ -36,7 +36,7 @@ export const postLogin = async (req, res) => {
 
     return res.status(201).json({
       username,
-      password,
+      name: user.name,
       token,
     });
   } catch (error) {

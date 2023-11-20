@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 import {
   faPenToSquare,
   faNoteSticky,
   faClipboard,
 } from "@fortawesome/free-regular-svg-icons";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import "./sectionOptions.css";
 import ModalCreateEditNote from "../../../modalCreateEditNote/ModalCreateEditNote";
 
@@ -13,7 +15,8 @@ const SectionOptions = ({
   handleMyNotesChange,
 }) => {
   const [modalIsOpenCreate, setModalIsOpenCreate] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("misNotas"); // Pista sobre la opción seleccionada
+  const [selectedOption, setSelectedOption] = useState("misNotas");
+  const navigate = useNavigate();
 
   const handleCreateNote = () => {
     setModalIsOpenCreate(true);
@@ -39,6 +42,12 @@ const SectionOptions = ({
     handleArchivedChange();
   };
 
+  const handleLogout = () => {
+    handleOptionClick("cerrarSesion");
+    window.localStorage.removeItem("loginUser");
+    navigate("/");
+  };
+
   return (
     <div className="section-options">
       <div
@@ -61,6 +70,16 @@ const SectionOptions = ({
       >
         <FontAwesomeIcon icon={faPenToSquare} className="icon-select" />
         Notas archivadas
+      </div>
+      <div
+        onClick={() => handleLogout()}
+        className={selectedOption === "cerrarSesion" ? "focused" : ""}
+      >
+        <FontAwesomeIcon
+          icon={faArrowRightFromBracket}
+          className="icon-select"
+        />
+        Cerrar Sesión
       </div>
 
       <ModalCreateEditNote
