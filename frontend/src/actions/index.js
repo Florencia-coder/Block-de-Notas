@@ -18,7 +18,6 @@ export function usePostNote() {
       Authorization: `Bearer ${logedUser.token}`,
     },
   };
-  console.log(logedUser.token);
   const postNoteMutation = useMutation(
     async ({ title, description, category }) => {
       const response = await axios.post(
@@ -48,9 +47,11 @@ export function usePostNote() {
   };
 }
 
-export const postLogin = async (credentials) => {
-  const { data } = await axios.post(`${PORT}/login`, credentials);
-  return data;
+
+export const usePosLogin = () => {
+  return useMutation((credentials) => {
+    return axios.post(`${PORT}/login`, credentials);
+  });
 };
 
 export const usePostUser = () => {

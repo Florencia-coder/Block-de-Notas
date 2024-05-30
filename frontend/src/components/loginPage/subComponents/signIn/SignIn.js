@@ -13,7 +13,7 @@ const SignIg = () => {
   const [errorSignIn, setErrorSignIn] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const { mutate } = usePostUser();
+  const { mutate, isLoading } = usePostUser();
 
   const handleSignIn = async (event) => {
     event.preventDefault();
@@ -105,7 +105,9 @@ const SignIg = () => {
         {errorSignIn.general && (
           <p className="error-message">{errorSignIn.general}</p>
         )}{" "}
-        <button className="button">¡ Registrarme !</button>
+        <button className="button">
+        {isLoading ? "Cargando ..." : "¡ Registrarme !"}
+          </button>
       </form>
     </>
   );

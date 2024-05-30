@@ -19,6 +19,7 @@ code {
   --font-title-family: ui-serif;
   --font-text-family: sans-serif;
   --dark-color: #1e1e1e;
+  --cyan-1:#045755;
 }
 
 ::-webkit-scrollbar {

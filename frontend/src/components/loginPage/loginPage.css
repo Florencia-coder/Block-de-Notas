@@ -45,7 +45,7 @@ form {
 }
 
 .container-one {
-  background: url("./zzz.jpg") center/cover;
+  background-color: var(--cyan-1);
   height: 100%;
 }
 
