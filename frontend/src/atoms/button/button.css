@@ -1,0 +1,19 @@
+.button-grey {
+  color: #d4d9d2;
+  background-color: transparent;
+  border-radius: 14px;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: var(--font-text-family);
+}
+  
+.button-grey:hover {
+  background-color: #51544a;
+}
+  
+.button-grey:disabled{
+  color:#64675c
+}

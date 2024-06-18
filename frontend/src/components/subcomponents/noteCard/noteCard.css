@@ -1,0 +1,33 @@
+.card-header{
+  display: flex;
+  flex-direction: column;
+}
+.card-header_title {
+  color: #383934;
+  font-family: var(--font-title-family);
+}
+
+.card-header_edition {
+  font-size: xx-small;
+  font-family: var(--font-text-family);
+  color: #383934;
+}
+.card-header_description {
+  font-family: var(--font-title-family);
+  font-size: small;
+  color: #383934;
+  margin-top: 1rem;
+}
+
+.card-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.card-footer > svg {
+  margin-right: 10px; /* Ajusta el valor según el espacio deseado entre los iconos */
+}
+.card-footer_icon {
+  width: 1.4rem;
+  height: 1.4rem;
+}

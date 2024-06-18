@@ -1,0 +1,12 @@
+.block-main {
+  width: 100%;
+  height: 100%;
+}
+
+.section-body {
+  width: 100%;
+  height: 91%;
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+}

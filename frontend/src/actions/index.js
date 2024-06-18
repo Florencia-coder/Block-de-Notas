@@ -15,7 +15,7 @@ export function usePostNote() {
   const logedUser = JSON.parse(window.localStorage.getItem("loginUser"));
   const config = {
     headers: {
-      Authorization: `Bearer ${logedUser.token}`,
+      Authorization: `Bearer ${logedUser.data.token}`,
     },
   };
   const postNoteMutation = useMutation(

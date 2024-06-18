@@ -1,0 +1,18 @@
+#input-text {
+    border: 0.3px solid var(--background-color);
+    font-size: 1.6rem;
+    border-radius: 12px;
+    padding: 8px;
+    background-color: var(--background-clear);
+    color: var(--label-color); 
+    outline: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-text-fill-color: #888d83 !important;
+    -webkit-box-shadow: 0 0 0 30px var(--background-clear) inset !important;
+
+}

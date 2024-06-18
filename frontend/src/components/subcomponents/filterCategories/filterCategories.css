@@ -1,0 +1,31 @@
+select {
+  height: 100%;
+  font-size: 1rem;
+  padding: 1.5vh;
+  border: 0.3vh solid var(--background-color);
+  border-radius: 8px;
+  width: 100%; /* Ajusta el ancho según tu preferencia */
+  background-color: var(--background-clear); /* Color de fondo */
+  color: #888d83; /* Color del texto */
+  outline: none;
+}
+select:focus {
+  color: var(--font-title-color);
+  background-color: var(--background-clear);
+}
+
+
+option {
+  color: var(--font-title-color);
+  background-color: var(--background-clear);
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+}
+
+.icon-filter {
+  margin-left: 12px;
+  color: #51544a;
+}

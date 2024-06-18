@@ -2,14 +2,15 @@ import Modal from "react-modal";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faSpinner } from "@fortawesome/free-solid-svg-icons";
-import "./modalCreateEditNote.css";
 import {
   usePostNote,
   usePutNote,
   useGetCategories,
   useGetCategoryById,
 } from "../../actions";
-import FilterCategories from "../home/subcomponents/filterCategories/FilterCategories";
+import FilterCategories from "../subcomponents/filterCategories/FilterCategories";
+import Button from "../../atoms/button/Button";
+import "./modalCreateEditNote.css";
 
 const ModalCreateEditNote = ({
   modalIsOpen,
@@ -30,6 +31,15 @@ const ModalCreateEditNote = ({
   const { getCategoryById } = useGetCategoryById();
   const { data, isLoading: isLoadingCategories } = useGetCategories();
 
+  const validateFields = () => {
+    if (titleInput.trim() === "" || descriptionInput.trim() === "") {
+      alert("Por favor, complete todos los campos requeridos.");
+      return false;
+    }
+    return true;
+  };
+
+  
   /**
    *  Agrega la categoria al estado local, y setea el input de "Nueva categoria"
    */
@@ -52,26 +62,28 @@ const ModalCreateEditNote = ({
   /**
    * Elimina la categoria seleccionada del estado local
    */
-  const removeCategory = () => {
+    const removeCategory = () => {
     setSelectedCategory(null);
   };
 
-  /**
+    /**
    * Se ejecuta cuando se le da a "Guardar", si es de tipo "edit", hace un PUT con la info que tiene,
    * de lo contrario hace un POST, creando la nueva nota con toda la información.
    */
   const handleModalClose = async () => {
+    if (!validateFields()) return;
+
     if (type === "edit") {
       await putNote({
         id,
-        title: titleInput,
+        title: titleInput.toLowerCase(),
         description: descriptionInput,
         archived,
         category: selectedCategory,
       });
     } else {
       await postNote({
-        title: titleInput,
+        title: titleInput.toLowerCase(),
         description: descriptionInput,
         category: selectedCategory,
       });
@@ -79,7 +91,7 @@ const ModalCreateEditNote = ({
     onClose();
   };
 
-  /**
+    /**
    * Si se presiona "Cancelar" se cierra el modal.
    */
   const closeModal = () => {
@@ -98,25 +110,23 @@ const ModalCreateEditNote = ({
   };
 
   useEffect(() => {
-    // Si es de tipo "Crear" seteamos los inputs
+        // Si es de tipo "Crear" seteamos los inputs
     if (type === "create") {
       setTitleInput("");
       setDescriptionInput("");
       setSelectedCategory(null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalIsOpen]);
 
   useEffect(() => {
     async function functionSetCategory() {
-      // Si es de tipo "Editar" guardamos las categorias de la nota en un estado local para luego mostrarlas
-      if (type === "edit" && categoryId) {
+            // Si es de tipo "Editar" guardamos las categorias de la nota en un estado local para luego mostrarlas
+            if (type === "edit" && categoryId) {
         const category = await getCategoryById(categoryId);
         setSelectedCategory(category.name);
       }
     }
     functionSetCategory();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalIsOpen]);
 
   return (
@@ -127,7 +137,7 @@ const ModalCreateEditNote = ({
       overlayClassName="modal-overlay-note"
       ariaHideApp={false}
     >
-      <h2>{type === "edit" ? "Edita tu nota" : "Crea tu nota"}</h2>
+      <h2 className="modal-content-note-title">{type === "edit" ? "Edita tu nota" : "Crea tu nota"}</h2>
       <div className="separatorHeader" />
 
       <div className="input-container">
@@ -194,15 +204,18 @@ const ModalCreateEditNote = ({
       </div>
 
       <div className="container-label-button">
-        <button onClick={closeModal} className="button">
-          Cancelar
-        </button>
+        <Button
+        onClick={closeModal}
+        title="Cancelar"
+        />
         {isLoading || isLoadingPut ? (
           <FontAwesomeIcon className="icon-spiner" icon={faSpinner} spin />
         ) : (
-          <button onClick={handleModalClose} type="submit" className="button">
-            Guardar
-          </button>
+          <Button
+          onClick={handleModalClose}
+          type="submit"
+          title="Guardar"
+          />
         )}
       </div>
     </Modal>

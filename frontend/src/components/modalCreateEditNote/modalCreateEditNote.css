@@ -32,7 +32,7 @@ textarea:active {
   outline: none;
 }
 
-.modal-content-note h2 {
+.modal-content-note-title {
   margin: 0;
   padding: 0;
   margin-bottom: 16px;
