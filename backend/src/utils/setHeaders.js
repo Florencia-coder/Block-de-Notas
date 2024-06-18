@@ -1,6 +1,6 @@
 function setHeaders(req, res, next) {
   //Aca estamos seteando todos nuestros headers.
-  res.header("Access-Control-Allow-Origin", "https://block-de-notas.vercel.app");
+  res.header("Access-Control-Allow-Origin", "https://block-de-notas-frontend.vercel.app");
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
