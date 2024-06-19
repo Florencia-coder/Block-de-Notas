@@ -4,8 +4,14 @@ import axios from "axios";
 const PORT = "https://block-de-notas.vercel.app";
 
 export function useGetNotes() {
+  const logedUser = JSON.parse(window.localStorage.getItem("loginUser"));
+  const config = {
+    headers: {
+      Authorization: `Bearer ${logedUser.data.token}`,
+    },
+  };
   return useQuery("notes", async () => {
-    const response = await axios.get(`${PORT}/notes`);
+    const response = await axios.get(`${PORT}/notes`, config);
     return response.data;
   });
 }
