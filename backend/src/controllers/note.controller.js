@@ -2,7 +2,11 @@ import { Note, Category, User } from "../models/index.js";
 
 export const getNotes = async (req, res) => {
   try {
-    const notes = await Note.findAll();
+    const notes = await Note.findAll({
+      where: {
+        userId: req.userId
+      }
+    });
     res.json(notes);
   } catch (error) {
     return res.status(500).json({ message: error.message });
