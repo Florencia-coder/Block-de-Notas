@@ -34,6 +34,7 @@ export const createNote = async (req, res) => {
   const newNote = await Note.create({
     title,
     description,
+    userId,
     categoryId: categoryInstance ? categoryInstance[0].id : null,
   });
 
