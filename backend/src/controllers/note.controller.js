@@ -1,11 +1,11 @@
 import { Note, Category, User } from "../models/index.js";
 
 export const getNotes = async (req, res) => {
+  const {userId} = req
+
   try {
     const notes = await Note.findAll({
-      where: {
-        userId: req.userId
-      }
+      where: {userId}
     });
     res.json(notes);
   } catch (error) {
@@ -14,28 +14,29 @@ export const getNotes = async (req, res) => {
 };
 
 export const createNote = async (req, res) => {
-  const { title, description, category } = req.body;
+  const { title='', description='', category='' } = req.body;
 
   const { userId } = req;
-  const user = User.findByPk(userId);
+  const user = await User.findByPk(userId);
 
   if (!user) {
     return res.status(404).json({ error: "Usuario no encontrado" });
   }
   // Verifica y crea la categoría si es proporcionada
   let categoryInstance = null;
-  if (category && category.trim() !== "") {
-    categoryInstance = await Category.findOrCreate({
-      where: { name: category },
+  if (category && category?.trim() !== "") {
+    [categoryInstance] = await Category.findOrCreate({
+      where: { name: category, userId: userId },
+      defaults: { userId: userId }
     });
   }
-
+  
   // Crea una nueva nota relacionada con el usuario
   const newNote = await Note.create({
     title,
     description,
     userId,
-    categoryId: categoryInstance ? categoryInstance[0].id : null,
+    categoryId: categoryInstance ? categoryInstance.id : null,
   });
 
   return res.status(201).json(newNote);
@@ -44,13 +45,27 @@ export const createNote = async (req, res) => {
 export const deleteNote = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedNote = await Note.destroy({
+    const {userId} = req;
+
+    // Buscar la nota para asegurarse de que pertenece al usuario logueado
+    const note = await Note.findOne({
+      where: {
+        id,
+        userId,
+      },
+    });
+
+    if (!note) {
+      return res.status(404).json({ message: "Note does not exist or you don't have permission to delete it." });
+    }
+
+    // Eliminar la nota
+    await Note.destroy({
       where: {
         id,
       },
     });
-    if (!deletedNote)
-      return res.status(500).json({ message: "Note does not exists." });
+
     res.sendStatus(204);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -60,27 +75,40 @@ export const deleteNote = async (req, res) => {
 export const updateNote = async (req, res) => {
   try {
     const { id } = req.params;
+    const {userId} =req;
     const { title, description, archived, category } = req.body;
 
+    // Buscar la nota para asegurarse de que pertenece al usuario logueado
+    const note = await Note.findOne({
+      where: {
+        id,
+        userId,
+      },
+    });
+
+    if (!note) {
+      return res.status(404).json({ message: "Note does not exist or you don't have permission to update it." });
+    }
+
+    // Verifica y crea la categoría si es proporcionada
     let categoryInstance = null;
     if (category && category.trim() !== "") {
       categoryInstance = await Category.findOne({
-        where: { name: category },
+        where: { name: category, userId },
       });
 
       if (!categoryInstance) {
-        categoryInstance = await Category.create({ name: category });
+        categoryInstance = await Category.create({ name: category, userId });
       }
     }
 
-    const note = await Note.findByPk(id);
-    if (!note)
-      return res.status(500).json({ message: "Note does not exists." });
+    // Actualiza los campos de la nota
     note.title = title;
     note.description = description;
     note.archived = archived || false;
-    (note.categoryId = categoryInstance ? categoryInstance.id : null),
-      await note.save();
+    note.categoryId = categoryInstance ? categoryInstance.id : null;
+
+    await note.save();
 
     res.json(note);
   } catch (error) {
@@ -91,14 +119,22 @@ export const updateNote = async (req, res) => {
 export const updateArchivedNote = async (req, res) => {
   try {
     const { id } = req.params;
+    const {userId} =req;
     const { archived } = req.body;
 
-    const note = await Note.findByPk(id);
-    if (!note) return res.status(500).json({ message: "Note does not exist." });
+    // Buscar la nota para asegurarse de que pertenece al usuario logueado
+    const note = await Note.findOne({
+      where: {
+        id,
+        userId,
+      },
+    });
 
-    if (archived !== undefined) {
-      note.archived = archived;
+    if (!note) {
+      return res.status(404).json({ message: "Note does not exist or you don't have permission to update it." });
     }
+
+    note.archived = archived;
 
     await note.save();
 
@@ -111,9 +147,20 @@ export const updateArchivedNote = async (req, res) => {
 export const getNote = async (req, res) => {
   try {
     const { id } = req.params;
-    const note = await Note.findByPk(id);
-    if (!note)
-      return res.status(500).json({ message: "Note does not exists." });
+    const {userId} =req;
+
+    // Buscar la nota para asegurarse de que pertenece al usuario logueado
+    const note = await Note.findOne({
+      where: {
+        id,
+        userId,
+      },
+    });
+
+    if (!note) {
+      return res.status(404).json({ message: "Note does not exist or you don't have permission to view it." });
+    }
+
     res.json(note);
   } catch (error) {
     return res.status(500).json({ message: error.message });

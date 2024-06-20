@@ -3,14 +3,15 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import "./filterCategories.css";
 
 const FilterCategories = ({
-  categories,
+  categories =[],
   handleCategory = () => {},
   styleSelect,
-  defaultValue,
+  defaultValue = 'Todas',
   selectedCategory,
-  disabled,
-  isLoadingCategories,
+  disabled= false,
+  isLoadingCategories =false,
 }) => {
+  console.log({categories});
   if (isLoadingCategories) {
     return (
       <div className="loading-spinner">
@@ -27,13 +28,13 @@ const FilterCategories = ({
       disabled={disabled}
       value={selectedCategory}
     >
-      <option value="All" selected>
-        {defaultValue ? defaultValue : `Todas`}
+      <option value="All" selected key='all'>
+        {defaultValue}
       </option>
-      {categories?.length > 0 &&
-        categories?.map((category, index) => {
+      {categories.length > 0 &&
+        categories.map((category, index) => {
           return (
-            <option value={index} name={category.name}>
+            <option value={index} name={category.name} key={category.id}>
               {category.name}
             </option>
           );

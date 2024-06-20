@@ -53,7 +53,6 @@ const NoteCard = ({
     await patchNote({ id, archived: false });
   };
 
-  
 
   return (
     <>

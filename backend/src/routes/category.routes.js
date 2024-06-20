@@ -1,14 +1,15 @@
 import { Router } from "express";
 import {
   getCategories,
+  getCategoryNotesByUserId,
   getCategoryById,
-  getNotesCategory,
 } from "../controllers/category.controller.js";
+import userExtractor from "../middleware/UserExtractor.js";
 
 const router = Router();
 
-router.get("/categories", getCategories);
+router.get("/categories",userExtractor, getCategories);
 router.get("/categories/:id", getCategoryById);
-router.get("/categories/:id/notes", getNotesCategory);
+router.get("/categories/:id/notes", userExtractor, getCategoryNotesByUserId);
 
 export default router;

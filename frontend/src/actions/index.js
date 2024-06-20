@@ -68,6 +68,12 @@ export const usePostUser = () => {
 
 export function usePutNote() {
   const queryClient = useQueryClient();
+  const logedUser = JSON.parse(window.localStorage.getItem("loginUser"));
+  const config = {
+    headers: {
+      Authorization: `Bearer ${logedUser.data.token}`,
+    },
+  };
   const putNoteMutation = useMutation(
     async ({ id, title, description, archived, category }) => {
       const response = await axios.put(`${PORT}/notes/${id}/`, {
@@ -75,7 +81,7 @@ export function usePutNote() {
         description,
         archived,
         category,
-      });
+      }, config);
       return response.data;
     }
   );
@@ -102,10 +108,16 @@ export function usePutNote() {
 
 export function usePatchNote() {
   const queryClient = useQueryClient();
+  const logedUser = JSON.parse(window.localStorage.getItem("loginUser"));
+  const config = {
+    headers: {
+      Authorization: `Bearer ${logedUser.data.token}`,
+    },
+  };
   const patchNoteMutation = useMutation(async ({ id, archived }) => {
     const response = await axios.patch(`${PORT}/notes/${id}/`, {
       archived,
-    });
+    }, config);
     return response.data;
   });
 
@@ -127,9 +139,15 @@ export function usePatchNote() {
 
 export function useDeleteNote() {
   const queryClient = useQueryClient();
+  const logedUser = JSON.parse(window.localStorage.getItem("loginUser"));
+  const config = {
+    headers: {
+      Authorization: `Bearer ${logedUser.data.token}`,
+    },
+  };
 
   const deleteNoteMutation = useMutation(async (noteId) => {
-    const response = await axios.delete(`${PORT}/notes/${noteId}`);
+    const response = await axios.delete(`${PORT}/notes/${noteId}`, config);
     return response.data;
   });
 
@@ -146,8 +164,14 @@ export function useDeleteNote() {
 }
 
 export function useGetCategories() {
+  const logedUser = JSON.parse(window.localStorage.getItem("loginUser"));
+  const config = {
+    headers: {
+      Authorization: `Bearer ${logedUser.data.token}`,
+    },
+  };
   return useQuery("categories", async () => {
-    const response = await axios.get(`${PORT}/categories`);
+    const response = await axios.get(`${PORT}/categories`, config);
     return response.data;
   });
 }
@@ -170,8 +194,14 @@ export function useGetCategoryById() {
 }
 
 export function useGetNotesCategory() {
+  const logedUser = JSON.parse(window.localStorage.getItem("loginUser"));
+  const config = {
+    headers: {
+      Authorization: `Bearer ${logedUser.data.token}`,
+    },
+  };
   const noteCategoryMutation = useMutation(async (id) => {
-    const response = await axios.get(`${PORT}/categories/${id}/notes/`);
+    const response = await axios.get(`${PORT}/categories/${id}/notes/`, config);
     return response.data;
   });
 

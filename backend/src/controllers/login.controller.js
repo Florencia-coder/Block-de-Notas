@@ -11,9 +11,7 @@ export const postLogin = async (req, res) => {
     });
 
     if (!user) {
-      return res
-        .status(401)
-        .json({ error: "No existe una cuenta creada con ese usuario" });
+      return res.status(401).json({ error: "No existe una cuenta creada con ese usuario" });
     }
     const passwordCorrect = await bcrypt.compare(password, user.passwordHash);
 
@@ -21,17 +19,20 @@ export const postLogin = async (req, res) => {
       return res.status(401).json({ error: "Contraseña o usuario invalido." });
     }
 
-    const newLogin = await Login.create({
-      username,
-      password,
+    // Verificar si el login ya existe
+    const existingLogin = await Login.findOne({
+      where: { username, password }
     });
 
+    if (!existingLogin) {
+      // Crear el login solo si no existe
+      await Login.create({ username, password });
+    }
+
     const token = jwt.sign(
-      { id: newLogin.id, username: newLogin.email },
+      { id: user.id, username: user.email },
       process.env.SECRET,
-      {
-        expiresIn: 60 * 60 * 24 * 30,
-      }
+      { expiresIn: '30d' }
     );
 
     return res.status(201).json({
@@ -40,7 +41,7 @@ export const postLogin = async (req, res) => {
       token,
     });
   } catch (error) {
-    return res.status(500).json({ error: "Error al iniciar sesion", error });
+    return res.status(500).json({ error: "Error al iniciar sesión", details: error.message });
   }
 };
 

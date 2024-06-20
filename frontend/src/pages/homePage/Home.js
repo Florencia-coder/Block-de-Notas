@@ -10,7 +10,7 @@ const Home = () => {
   const [allNotes, setAllNotes] = useState();
   const [isArchivedBody, setIsArchivedBody] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const { data: notes, isLoading } = useGetNotes();
+  const { data: notes, isLoading, refetch } = useGetNotes();
   const { noteCategory } = useGetNotesCategory();
 
   const handleCategoryChange = async (event) => {
@@ -23,12 +23,14 @@ const Home = () => {
         setAllNotes(notes?.filter((item) => !item.archived));
       }
     } else {
-      const notesByCat = await noteCategory(Number(selectedValue) + 1);
+      const notesByCat = await noteCategory(Number(selectedValue) + 1) || []
+      console.log('valor de id de categoria', selectedValue);
+      console.log('Notas por categoria:', notesByCat);
       if (isArchivedBody) {
-        const notesFilterArchived = notesByCat.filter((note) => note.archived);
+        const notesFilterArchived = notesByCat?.filter((note) => note.archived);
         setAllNotes(notesFilterArchived);
       } else {
-        const notesFilterUnarchived = notesByCat.filter(
+        const notesFilterUnarchived = notesByCat?.filter(
           (note) => !note.archived
         );
         setAllNotes(notesFilterUnarchived);
@@ -55,6 +57,10 @@ const Home = () => {
       setAllNotes(notes?.filter((item) => item.archived));
     }
   }, [notes]);
+
+  useEffect(()=>{
+    refetch()
+  },[])
 
   return (
     <div className="block-main">

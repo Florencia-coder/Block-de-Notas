@@ -1,8 +1,15 @@
-import { Category } from "../models/index.js";
+import { Category, Note } from "../models/index.js";
 
 export const getCategories = async (req, res) => {
   try {
-    const categories = await Category.findAll();
+    const userId = req.userId;
+
+    const categories = await Category.findAll({
+      where: {
+        userId,
+      },
+    });
+
     res.json(categories);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -25,16 +32,30 @@ export const getCategoryById = async (req, res) => {
   }
 };
 
-export const getNotesCategory = async (req, res) => {
-  const { id } = req.params;
+export const getCategoryNotesByUserId = async (req, res) => {
+  const categoryId = req.params.id;
+  const userId = req.userId;
+
   try {
-    const category = await Category.findByPk(id);
+
+    const category = await Category.findByPk(categoryId);
+    
     if (!category) {
-      return res.status(404).json({ message: "Category does not exist." });
+      return res.status(404).json({ error: "Categoría no encontrada" });
     }
-    const notes = await category.getNotes(); // Cargar las notas asociadas
-    res.json(notes);
+
+    // Buscar las notas asociadas a la categoría y al usuario
+    const notes = await Note.findAll({
+      where: {
+        categoryId,
+        userId
+      },
+    });
+
+    // Devolver la categoría con sus notas del usuario específico
+    return res.status(200).json(notes);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    console.error(error);
+    return res.status(500).json({ error: 'Error al obtener la categoría y notas' });
   }
 };

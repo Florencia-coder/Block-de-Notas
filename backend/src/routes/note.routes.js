@@ -14,10 +14,10 @@ const router = Router();
 
 router.get("/notes",userExtractor, getNotes);
 router.post("/notes", userExtractor, createNote);
-router.put("/notes/:id", updateNote);
-router.patch("/notes/:id", updateArchivedNote);
-router.delete("/notes/:id", deleteNote);
-router.get("/notes/:id", getNote);
+router.put("/notes/:id",userExtractor, updateNote);
+router.patch("/notes/:id",userExtractor, updateArchivedNote);
+router.delete("/notes/:id", userExtractor ,deleteNote);
+router.get("/notes/:id",userExtractor, getNote);
 router.get("/notes/:id/categories", getCategoriesNote);
 
 export default router;

@@ -24,12 +24,11 @@ export const Note = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-  },
-  {
-    timestamps: false,
   }
 );
 
 Note.belongsTo(Category, { foreignKey: "categoryId", allowNull: true });
 Category.hasMany(Note, { foreignKey: "categoryId" });
 User.hasMany(Note, { foreignKey: "userId" });
+User.hasMany(Category, { foreignKey: "userId" });
+Category.belongsTo(User, { foreignKey: "userId" });
