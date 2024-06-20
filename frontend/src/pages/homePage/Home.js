@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./home.css";
 import SectionHeader from "../../components/sectionHeader/SectionHeader";
 import SectionOptions from "../../components/sectionOptions/SectionOptions";
-import { useGetNotes, useGetNotesCategory } from "../../actions";
+import { useGetNotes, useGetNotesByCategory } from "../../actions";
 import SectionNotes from "../../components/sectionNotes/SectionNotes";
 
 const Home = () => {
@@ -11,21 +11,19 @@ const Home = () => {
   const [isArchivedBody, setIsArchivedBody] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const { data: notes, isLoading, refetch } = useGetNotes();
-  const { noteCategory } = useGetNotesCategory();
+  const { notesByCategory } = useGetNotesByCategory();
 
   const handleCategoryChange = async (event) => {
-    const selectedValue = event.target.value;
-    setSelectedCategory(selectedValue);
-    if (selectedValue === "All") {
+    const selectedCategory = event.target.value;
+    setSelectedCategory(selectedCategory);
+    if (selectedCategory === "All") {
       if (isArchivedBody) {
         setAllNotes(notes?.filter((item) => item.archived));
       } else {
         setAllNotes(notes?.filter((item) => !item.archived));
       }
     } else {
-      const notesByCat = await noteCategory(Number(selectedValue) + 1) || []
-      console.log('valor de id de categoria', selectedValue);
-      console.log('Notas por categoria:', notesByCat);
+      const notesByCat = await notesByCategory(Number(selectedCategory)) || []
       if (isArchivedBody) {
         const notesFilterArchived = notesByCat?.filter((note) => note.archived);
         setAllNotes(notesFilterArchived);

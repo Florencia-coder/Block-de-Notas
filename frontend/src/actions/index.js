@@ -193,7 +193,7 @@ export function useGetCategoryById() {
   };
 }
 
-export function useGetNotesCategory() {
+export function useGetNotesByCategory() {
   const logedUser = JSON.parse(window.localStorage.getItem("loginUser"));
   const config = {
     headers: {
@@ -205,12 +205,12 @@ export function useGetNotesCategory() {
     return response.data;
   });
 
-  const noteCategory = async (id) => {
+  const notesByCategory = async (id) => {
     return await noteCategoryMutation.mutateAsync(id);
   };
 
   return {
-    noteCategory,
+    notesByCategory,
     isLoading: noteCategoryMutation.isLoading,
     isError: noteCategoryMutation.isError,
   };

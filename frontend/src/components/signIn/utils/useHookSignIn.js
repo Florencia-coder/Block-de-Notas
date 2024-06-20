@@ -39,8 +39,6 @@ const useHookSignIn = () => {
         })
       
     } catch (e) {
-        console.log({e});
-
       if (e.name === "ValidationError") {
         const errors = {};
         e.inner.forEach((error) => {

@@ -11,7 +11,6 @@ const FilterCategories = ({
   disabled= false,
   isLoadingCategories =false,
 }) => {
-  console.log({categories});
   if (isLoadingCategories) {
     return (
       <div className="loading-spinner">
@@ -32,9 +31,9 @@ const FilterCategories = ({
         {defaultValue}
       </option>
       {categories.length > 0 &&
-        categories.map((category, index) => {
+        categories.map((category) => {
           return (
-            <option value={index} name={category.name} key={category.id}>
+            <option value={category.id} name={category.name} key={category.id}>
               {category.name}
             </option>
           );
