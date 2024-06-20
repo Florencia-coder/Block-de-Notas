@@ -10,7 +10,7 @@ async function main() {
   try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
     console.log("Synchronize tables with database successfully");
     app.listen(PORT, () => {
       console.log(`Escuchando en el puerto ${PORT}`); // eslint-disable-line no-console
