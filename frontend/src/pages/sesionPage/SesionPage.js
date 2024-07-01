@@ -9,23 +9,19 @@ const SesionPage = () => {
 const [isSignIn, setIsSignIn] = useState(false);
 
   return (
-    <div className="login">
-      <div className="block-left">
-        <h1 className="block-left_title">Mis Notas</h1>
-      </div>
-      <div className="block-right">
-        <h1 className="block-right_title">¡Bienvenido!</h1>
+    <div className="container-login" >
+    <div className="login-block">
+        <h1 className="login-block-title">¡Bienvenido!</h1>
         {isSignIn ? (
           <SignIn />
         ) : (
           <Login />
         )}
-        <p className="block-right_text">ó</p>
         <Button
         onClick={() => setIsSignIn(!isSignIn)}
         title={isSignIn ? `Ya tengo usuario` : `Registrarme`}
         />
-      </div>
+    </div>
     </div>
   );
 };

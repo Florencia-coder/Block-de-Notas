@@ -1,4 +1,6 @@
 import Modal from "react-modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useDeleteNote } from "../../../actions";
 import Button from "../../../atoms/button/Button";
 import "./modalDeleteCard.css";
@@ -23,7 +25,9 @@ const ModalDeleteCard = ({ modalIsOpen, onClose, id }) => {
       <p className="modal-delete-text">Si eliminas la siguiente nota, no podrás recuperarla más tarde.</p>
       <div className="block-button">
         <Button onClick={onClose} title="Cancelar"/>
-        <Button onClick={handleDeleteNote} title={isLoading ? "Cargando..." : "Aceptar"} />
+        <Button onClick={handleDeleteNote} title={isLoading ? (
+            <FontAwesomeIcon className="icon-spiner" icon={faSpinner} spin />
+          ) : "Aceptar"} />
       </div>
     </Modal>
   );

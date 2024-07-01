@@ -1,0 +1,34 @@
+.navbar {
+  background-color: var(--mandy-200);
+  color: var(--mandy-950);
+  display: flex;
+  align-content: center;
+  width: 60%;
+  border-radius: 0 0 4px 4px;
+  height: 4.5rem;
+}
+.navbar > div {
+  width: 50%; /* Ambos div tienen el 50% del ancho del nav */
+}
+  
+.block-navbar {
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+  
+.navbar-title {
+  font-weight: 600;
+  font-size: large;
+  font-style: italic;
+  
+}
+  
+.focused {
+  background-color: var(--mandy-300);
+  border-radius: 0 0 4px 4px;
+}
+  

@@ -1,6 +1,7 @@
 
 html{
   font-size:62.5%;
+  font-family: "Cormorant", serif;
 }
 
 * {
@@ -9,22 +10,48 @@ html{
 	padding:0;
 }
 
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+:root {
+  --mandy-50: #fef2f3;
+  --mandy-100: #fde6e7;
+  --mandy-200: #fbd0d5;
+  --mandy-300: #f7aab2;
+  --mandy-400: #f27a8a;
+  --mandy-500: #ea546c;
+  --mandy-600: #d5294d;
+  --mandy-700: #b31d3f;
+  --mandy-800: #961b3c;
+  --mandy-900: #811a39;
+  --mandy-950: #48091a;
+  --font-family-roboto: "Roboto", sans-serif;
+  --font-title-color: var(--mandy-950) ;
+  --background-color: var(--mandy-200);
+  --font-button-color: var(--mandy-50);
 }
 
-:root {
-  --font-title-color: #d4d9d2;
-  --background-color: #383934;
-  --background-clear: #51544a;
-  --font-title-family: ui-serif;
-  --font-text-family: sans-serif;
-  --dark-color: #1e1e1e;
-  --cyan-1:#7f5539;
-  --red-error: #e40a0a;
-  --label-color:#888d83;
-  --font-size-title:4rem;
+body{
+  width: 100vw;
+  height: 100vh;
+  background: var(--mandy-100);
+  display: flex;
+  justify-content: center;
+  color: var(--mandy-950)
+}
+
+.dark-mode {
+  --font-button-color: var(--mandy-950);
+  --font-title-color: #fef2f3; /* Cambia el color del título en modo oscuro */
+  --background-color: #811a39; /* Cambia el color de fondo en modo oscuro */
+  --mandy-50:#48091a;
+  --mandy-100:#44001a;
+  --mandy-200: #811a39;
+  --mandy-300:  #b31d3f;
+  --mandy-400:  #b31d3f;
+  --mandy-500: #d5294d;
+  --mandy-600:#ea546c;
+  --mandy-700: #f27a8a;
+  --mandy-800:  #f7aab2;
+  --mandy-900:    #fde6e7;
+  --mandy-950: #fef2f3
+
+
 }

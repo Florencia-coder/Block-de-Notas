@@ -1,23 +1,6 @@
-select {
-  height: 100%;
-  font-size: 1rem;
-  padding: 1.5vh;
-  border: 0.3vh solid var(--background-color);
-  border-radius: 8px;
-  width: 100%; /* Ajusta el ancho según tu preferencia */
-  background-color: var(--background-clear); /* Color de fondo */
-  color: #888d83; /* Color del texto */
-  outline: none;
-}
-select:focus {
-  color: var(--font-title-color);
-  background-color: var(--background-clear);
-}
-
-
 option {
-  color: var(--font-title-color);
-  background-color: var(--background-clear);
+  color: var(--mandy-700);
+  background-color: var(--mandy-200);
 }
 
 .loading-spinner {
@@ -27,5 +10,33 @@ option {
 
 .icon-filter {
   margin-left: 12px;
-  color: #51544a;
+  color: var(--mandy-700);
 }
+
+select {
+  padding: 4px;
+  color: var(--mandy-950);
+  background-color: transparent;
+  border: 1px solid var(--mandy-400);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+select:focus {
+  outline: none; /* Elimina el resplandor predeterminado del enfoque */
+}
+
+select option:checked {
+  background-color: transparent;
+  color: var(--mandy-700);
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+}
+
+.icon-filter {
+  margin-left: 12px;
+  color: var(--mandy-700);
+} 

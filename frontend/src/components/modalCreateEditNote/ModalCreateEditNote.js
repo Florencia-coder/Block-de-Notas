@@ -102,13 +102,11 @@ const ModalCreateEditNote = ({
    * Si selecciona una categoria existente, se busca la categoria y se agrega al estado local.
    */
   const handleCategoryExisting = async (event) => {
-    if (event.target.value !== "All") {
-      const selectedCategoryId = Number(event.target.value) + 1;
-      const category = await getCategoryById(selectedCategoryId);
-      setSelectedCategory(category.name);
+    if(event.target.value !== 'All'){
+    const category = JSON.parse(event.target.value)
+    setSelectedCategory(category.name);
     }
   };
-
   useEffect(() => {
         // Si es de tipo "Crear" seteamos los inputs
     if (type === "create") {
@@ -139,7 +137,7 @@ const ModalCreateEditNote = ({
     >
       <h2 className="modal-content-note-title">{type === "edit" ? "Edita tu nota" : "Crea tu nota"}</h2>
       <div className="separatorHeader" />
-
+<div>
       <div className="input-container">
         <input
           type="text"
@@ -164,25 +162,18 @@ const ModalCreateEditNote = ({
           required
         />
       </div>
+</div>
+
       <FilterCategories
         isLoadingCategories={isLoadingCategories}
         categories={data}
         handleCategory={handleCategoryExisting}
         defaultValue="Elegir categoria existente"
-        styleSelect={{
-          padding: "6px",
-          color: "#888d83",
-          fontSize: "small",
-          backgroundColor: "#51544a",
-          margin: "0px",
-          fontFamily: "sans-serif",
-        }}
         disabled={selectedCategory}
       />
-      <div className="square-ul-container">
-        <div>
-          <input
-            className="container-label-input"
+      <div className="square-container">
+            <input
+            className="square-container-input"
             id="categoryInput"
             value={categoryInput}
             onChange={(e) => setCategoryInput(e.target.value)}
@@ -190,7 +181,7 @@ const ModalCreateEditNote = ({
             placeholder="Nueva categoria"
             disabled={selectedCategory}
           />
-        </div>
+
         {selectedCategory && (
           <div className="selectedCategory">
             {selectedCategory}
@@ -208,15 +199,15 @@ const ModalCreateEditNote = ({
         onClick={closeModal}
         title="Cancelar"
         />
-        {isLoading || isLoadingPut ? (
-          <FontAwesomeIcon className="icon-spiner" icon={faSpinner} spin />
-        ) : (
+        
           <Button
           onClick={handleModalClose}
           type="submit"
-          title="Guardar"
+          title={isLoading || isLoadingPut ? (
+            <FontAwesomeIcon className="icon-spiner" icon={faSpinner} spin />
+          ) : 'Guardar'}
           />
-        )}
+
       </div>
     </Modal>
   );

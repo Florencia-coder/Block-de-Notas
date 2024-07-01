@@ -1,19 +1,21 @@
-.button-grey {
-  color: #d4d9d2;
-  background-color: transparent;
-  border-radius: 14px;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1.6rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-family: var(--font-text-family);
+.button-mandy {
+  border-radius: 6px;
+    border-style: none;
+    padding: 5px;
+    background-color: var(--mandy-500);
+    color: var(--font-button-color);
+    min-width: 8rem;
+    font-size: small;
+    font-style: italic;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 80%;
 }
   
-.button-grey:hover {
-  background-color: #51544a;
+.button-mandy:hover {
+  background-color: var(--mandy-600);
 }
   
-.button-grey:disabled{
-  color:#64675c
+.button-mandy:disabled{
+  color: var(--mandy-200)
 }

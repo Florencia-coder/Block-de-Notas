@@ -23,7 +23,7 @@ const SignIg = () => {
     } = useHookSignIn();
 
   return (
-    <div className='sign-in'>
+    <>
       <form className="sign-in_form" onSubmit={handleSignIn}>
         <Input value={name} setValue={setName} error={errorSignIn.name ?? null} placeholder="Nombre completo" name="FullName" autoComplete='name' />
         <Input value={username} setValue={setUsername} error={errorSignIn.username ?? null} placeholder="Nombre de usuario" name="UserName" autoComplete='email' />
@@ -53,7 +53,7 @@ const SignIg = () => {
         title='¡ Registrarme !'
         />
       </form>
-    </div>
+    </>
   );
 };
 

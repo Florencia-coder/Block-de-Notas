@@ -13,9 +13,9 @@
 
 .modal-delete {
   outline: none;
-  width: 49rem;
-  height: 15rem;
-  background-color: #383934;
+  width: 490px;
+  height: 150px;
+  background-color: var(--mandy-200);
   border-radius: 8px;
   padding: 16px;
   display: flex;
@@ -26,25 +26,26 @@
 .modal-delete-title {
   margin: 0;
   padding: 0;
-  font-family: ui-serif;
   align-self: center;
-  color: #d4d9d2;
+  font-style: italic;
+  color: var(--mandy-950);
 }
 
 .modal-delete-text {
-  font-family: sans-serif;
   align-self: center;
-  color: #d4d9d2;
-}
-
-.separatorHeader {
-  border-bottom: 1px solid #d4d9d2;
+  font-style: italic;
+  color: var(--mandy-950);
 }
 
 .block-button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap:8rem;
   align-items: flex-end;
+}
+
+.separatorHeader {
+  border-bottom: 1px solid var(--mandy-950);
 }
 

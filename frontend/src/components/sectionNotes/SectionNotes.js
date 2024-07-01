@@ -1,30 +1,11 @@
 import React from "react";
 import NoteCard from "../subcomponents/noteCard/NoteCard";
+import NewNoteCard from "../newNoteCard/NewNoteCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 import "./sectionNotes.css";
 
-const colores = [
-  "color-1",
-  "color-2",
-  "color-3",
-  "color-4",
-  "color-5",
-  "color-6",
-  "color-7",
-  "color-8",
-  "color-9",
-];
-let colorIndex = 0;
-
-// Función para asignar una clase de color de fondo a una tarjeta
-function asignarColorDeFondo(contenedor) {
-  const color = colores[colorIndex];
-  contenedor.classList.add(color);
-  colorIndex = (colorIndex + 1) % colores.length; // Vuelve a empezar si te quedas sin colores
-}
-
-const SectionNotes = ({ isLoading, allNotes, isArchivedBody }) => {
+const SectionNotes = ({ isLoading, allNotes, isArchivedPage }) => {
   if (isLoading) {
     return (
       <div className="loading">
@@ -35,12 +16,12 @@ const SectionNotes = ({ isLoading, allNotes, isArchivedBody }) => {
   }
   return (
     <div className="section-notes">
-      {allNotes?.map((el, index) => (
-        <div className={`section-notes_card ${colores[index % colores.length]}`}>
+      <NewNoteCard/>
+      {allNotes?.map((el) => (
+        <div className={`section-notes_card`} key={el.id}>
           <NoteCard
-            key={el.id}
             {...el}
-            type={isArchivedBody ? "archived-note" : ""}
+            type={isArchivedPage ? "archived-note" : ""}
           />
         </div>
       ))}

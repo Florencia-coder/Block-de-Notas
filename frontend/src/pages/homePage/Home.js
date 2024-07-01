@@ -1,82 +1,49 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import "./home.css";
-import SectionHeader from "../../components/sectionHeader/SectionHeader";
-import SectionOptions from "../../components/sectionOptions/SectionOptions";
-import { useGetNotes, useGetNotesByCategory } from "../../actions";
+import { useHomeHooks } from "./utils/hooks";
+import FilterCategories from "../../components/subcomponents/filterCategories/FilterCategories";
 import SectionNotes from "../../components/sectionNotes/SectionNotes";
+import NavBar from "../../components/navBar/NavBar";
+import Button from "../../atoms/button/Button";
 
 const Home = () => {
-  const [allNotes, setAllNotes] = useState();
-  const [isArchivedBody, setIsArchivedBody] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const { data: notes, isLoading, refetch } = useGetNotes();
-  const { notesByCategory } = useGetNotesByCategory();
 
-  const handleCategoryChange = async (event) => {
-    const selectedCategory = event.target.value;
-    setSelectedCategory(selectedCategory);
-    if (selectedCategory === "All") {
-      if (isArchivedBody) {
-        setAllNotes(notes?.filter((item) => item.archived));
-      } else {
-        setAllNotes(notes?.filter((item) => !item.archived));
-      }
-    } else {
-      const notesByCat = await notesByCategory(Number(selectedCategory)) || []
-      if (isArchivedBody) {
-        const notesFilterArchived = notesByCat?.filter((note) => note.archived);
-        setAllNotes(notesFilterArchived);
-      } else {
-        const notesFilterUnarchived = notesByCat?.filter(
-          (note) => !note.archived
-        );
-        setAllNotes(notesFilterUnarchived);
-      }
-    }
-  };
-
-  const handleArchivedChange = () => {
-    setSelectedCategory("All");
-    setAllNotes(notes?.filter((item) => item.archived));
-    setIsArchivedBody(true);
-  };
-
-  const handleMyNotes = () => {
-    setIsArchivedBody(false);
-    setSelectedCategory("All");
-    setAllNotes(notes?.filter((item) => !item.archived));
-  };
-
-  useEffect(() => {
-    if (!isArchivedBody) {
-      handleMyNotes();
-    } else {
-      setAllNotes(notes?.filter((item) => item.archived));
-    }
-  }, [notes]);
-
-  useEffect(()=>{
-    refetch()
-  },[])
+  const {
+    allNotes,
+    isArchivedPage,
+    setIsArchivedPage,
+    isLoading,
+    selectedCategory,
+    handleCategoryChange,
+    handleLogout,
+    toggleDarkMode,
+    darkMode
+  } = useHomeHooks();
 
   return (
     <div className="block-main">
-      <SectionHeader
-        handleCategoryChange={handleCategoryChange}
-        selectedCategory={selectedCategory}
-      />
-      <section className="section-body">
-        <SectionOptions
-          handleArchivedChange={handleArchivedChange}
-          handleMyNotesChange={handleMyNotes}
+      <div className="block-header">
+      <NavBar setIsArchivedPage={setIsArchivedPage} />
+      <div className="block-filter-mode">
+      <button className="button-mode" onClick={toggleDarkMode}>{(<FontAwesomeIcon icon={darkMode ? faSun : faMoon} />)}</button>
+        <FilterCategories
+          defaultValue="Todas las categorias"
+          handleCategory={(e) => handleCategoryChange(e)}
+          selectedCategory={selectedCategory}
         />
+      </div>
+      </div>
+      <section className="section-body">
         <SectionNotes
           allNotes={allNotes}
-          isArchivedBody={isArchivedBody}
+          isArchivedPage={isArchivedPage}
           isLoading={isLoading}
         />
       </section>
+      <div className="block-button-logout">
+        <Button onClick={handleLogout} title='Salir' />
+      </div>
     </div>
   );
 };
