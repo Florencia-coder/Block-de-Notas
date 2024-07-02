@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 
-const PORT = "http://localhost:2000";
+const PORT = "https://block-de-notas.vercel.app";
 
 export function useGetNotes() {
   const logedUser = JSON.parse(window.localStorage.getItem("loginUser"));
