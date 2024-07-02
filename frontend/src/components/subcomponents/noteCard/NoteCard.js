@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faEdit, faTrashAlt, faArchive, faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 import "./noteCard.css";
 import ModalDeleteCard from "../modalDeleteCard/ModalDeleteCard";
 import ModalCreateEditNote from "../../modalCreateEditNote/ModalCreateEditNote";
 import { usePatchNote } from "../../../actions";
 import formatDate from "../../home/utils";
 import Button from "../../../atoms/button/Button";
+import ButtonIcon from "../../../atoms/buttonIcon/ButtonIcon";
 
 const truncateText = (text, maxLength) => {
   if (text.length <= maxLength) {
@@ -27,7 +28,20 @@ const NoteCard = ({
   const [modalIsOpenDelete, setModalIsOpenDelete] = useState(false);
   const [modalIsOpenEdit, setModalIsOpenEdit] = useState(false);
   const { patchNote, isLoading } = usePatchNote();
-  const descriptionResume = truncateText(description, 120)
+  const descriptionResume = truncateText(description, 120);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleEditNote = () => {
     setModalIsOpenEdit(true);
@@ -53,7 +67,6 @@ const NoteCard = ({
     await patchNote({ id, archived: false });
   };
 
-
   return (
     <div className="container-note-card">
       <div className="container-note-card-text">
@@ -61,24 +74,54 @@ const NoteCard = ({
         <p>Ultima edición: {formatDate(updatedAt)}</p>
         <h4 className="note-card-description">{descriptionResume}</h4>
       </div>
-      <div className="container-button">
-      <Button
-          onClick={type === "archived-note" ? handleUnarchiveNote : handleArchiveNote}
-        title={isLoading ? (
-            <FontAwesomeIcon
-              className="icon-spiner-note-card"
-              icon={faSpinner}
-              spin
+        {
+          isMobile ? (
+          <div className="container-button">
+            <ButtonIcon 
+              onClick={type === "archived-note" ? handleUnarchiveNote : handleArchiveNote}
+              title={
+                isLoading ? (
+                  <FontAwesomeIcon icon={faSpinner} spin />
+                ) : type === "archived-note" ? (
+                  <FontAwesomeIcon icon={faBoxOpen} />
+                ) :  (
+                  <FontAwesomeIcon icon={faArchive} />
+                )
+              }
             />
-          ) : type === "archived-note" ? (
-            "Desarchivar"
-          ) : (
-            "Archivar"
-          )}
-        />
-        <Button onClick={handleEditNote} title='Editar'/>
-        <Button onClick={handleTrashCanClick} title='Eliminar'/>
-      </div>
+            <ButtonIcon
+              onClick={handleEditNote}
+              title={<FontAwesomeIcon icon={faEdit} />}
+            />
+            <ButtonIcon
+              onClick={handleTrashCanClick}
+              title={<FontAwesomeIcon icon={faTrashAlt} />}
+            />
+          </div>
+          ) :( 
+        <div className="container-button">
+          <Button
+            onClick={type === "archived-note" ? handleUnarchiveNote : handleArchiveNote}
+            title={
+              isLoading ? (
+                <FontAwesomeIcon className="icon-spinner-note-card" icon={faSpinner} spin />
+              ) : type === "archived-note" ? (
+                "Desarchivar"
+              ) :  (
+                "Archivar"
+              )
+            }
+          />
+          <Button
+            onClick={handleEditNote}
+            title="Editar"
+          />
+          <Button
+            onClick={handleTrashCanClick}
+            title="Eliminar"
+          />
+        </div>
+      )}
       <ModalDeleteCard
         modalIsOpen={modalIsOpenDelete}
         onClose={closeModalDelete}

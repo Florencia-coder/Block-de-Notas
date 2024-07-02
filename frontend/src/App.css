@@ -1,12 +1,16 @@
 .App {
+  height: 100%;
+  width: 50vw;
   background-color: var(--mandy-100);
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  height: 100vh;
-  justify-content: center;
   overflow-x:hidden;
 }
 
 .App::-webkit-scrollbar {
   display: none;
+}
+
+@media (max-width: 480px) {
+  .App {
+    width: 70vw;
+  }
 }

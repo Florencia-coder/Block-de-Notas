@@ -1,21 +1,35 @@
 .button-mandy {
+  width: 80%;
   border-radius: 6px;
-    border-style: none;
-    padding: 5px;
-    background-color: var(--mandy-500);
-    color: var(--font-button-color);
-    min-width: 8rem;
-    font-size: small;
-    font-style: italic;
-    cursor: pointer;
-    transition: all 0.3s;
-    width: 80%;
+  border-style: none;
+  padding: 5px;
+  background-color: var(--mandy-500);
+  color: var(--font-button-color);
+  font-size: small;
+  font-style: italic;
+  cursor: pointer;
+  transition: all 0.3s;
 }
-  
+
 .button-mandy:hover {
   background-color: var(--mandy-600);
 }
-  
-.button-mandy:disabled{
-  color: var(--mandy-200)
+
+.button-mandy:disabled {
+  color: var(--mandy-200);
+}
+
+/* Media Query para pantallas más pequeñas */
+@media (max-width: 1024px) {
+  .button-mandy {
+    font-size: small;
+    padding: 1.5%;
+  }
+}
+
+@media (max-width: 480px) {
+  .button-mandy {
+
+    padding: 1%;
+  }
 }

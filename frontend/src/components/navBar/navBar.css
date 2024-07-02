@@ -21,14 +21,19 @@
 }
   
 .navbar-title {
+  text-align: center;
   font-weight: 600;
-  font-size: large;
+  font-size: medium;
   font-style: italic;
-  
 }
   
 .focused {
   background-color: var(--mandy-300);
   border-radius: 0 0 4px 4px;
 }
-  
+
+@media (max-width: 480px) {
+  .navbar {
+    width: 100%;
+  }
+}

@@ -1,0 +1,13 @@
+.button-icon{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: var(--mandy-400);
+    color: var(--font-button-color);
+    font-size: small;
+  }
+  
+  .button-icon:hover{
+    cursor: pointer;
+  }

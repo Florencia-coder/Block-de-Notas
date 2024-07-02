@@ -3,13 +3,12 @@
     border: 1px solid var(--mandy-700);
     border-radius: 12px;
     background-image: linear-gradient(45deg, var(--mandy-200), var(--mandy-50));
-    padding: 2rem;
+    padding: 8%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-height: 50vh;
-    min-height: 50vh;
+    height: 100%;
   }
  
 .container-new-note {
@@ -24,10 +23,12 @@
 }
 
 .container-new-note-title {
-    color: var(--mandy-900);
-    font-style: italic;
-    font-size: medium;
-    transition: font-size 0.3s, transform 0.3s;
+  padding: 2%;
+  text-align: center;
+  color: var(--mandy-900);
+  font-style: italic;
+  font-size: medium;
+  transition: font-size 0.3s, transform 0.3s;
 }
 
 .container-new-note-title:hover{
@@ -54,5 +55,6 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    gap: 12px;
+    gap: 2%;
+    flex-direction: row;
   }
